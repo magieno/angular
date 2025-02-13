@@ -23,8 +23,8 @@ import {Observable, Subscription} from 'rxjs';
     text-align: center;
     cursor: pointer;
     transition: border 0.3s ease;
-    height: 100vh;
-    width: 100vw;
+    height: 100% !important;
+    width: 100% !important;
 
     &.dragEntered {
       border-color: #0d6efd;
