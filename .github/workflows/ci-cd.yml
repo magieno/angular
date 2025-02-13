@@ -43,3 +43,5 @@ jobs:
       - name: Publish the Magieno Angular Drag and Drop library
         run: npm publish
         working-directory: ./dist/magieno/angular-drag-and-drop
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.MAGIENO_NPM_TOKEN }}
