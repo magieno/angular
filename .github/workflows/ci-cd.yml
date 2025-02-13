@@ -42,8 +42,14 @@ jobs:
         run: npm run build
         working-directory: ./
 
-      - name: Bump the version
+      - name: Get the current version
         run: npm version --no-git-tag-version $(npm view @magieno/angular-drag-and-drop@latest version)
+        working-directory: ./dist/magieno/angular-drag-and-drop
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.MAGIENO_NPM_TOKEN }}
+
+      - name: Patch the version
+        run: npm version patch
         working-directory: ./dist/magieno/angular-drag-and-drop
         env:
           NODE_AUTH_TOKEN: ${{ secrets.MAGIENO_NPM_TOKEN }}
