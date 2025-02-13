@@ -1,0 +1,43 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "@magieno/angular-drag-and-drop": {
+      "projectType": "library",
+      "root": "projects/magieno/angular-drag-and-drop",
+      "sourceRoot": "projects/magieno/angular-drag-and-drop/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/magieno/angular-drag-and-drop/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/magieno/angular-drag-and-drop/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/magieno/angular-drag-and-drop/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/magieno/angular-drag-and-drop/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "7f3d97dc-f758-4fde-a53b-28901871fc3b"
+  }
+}
