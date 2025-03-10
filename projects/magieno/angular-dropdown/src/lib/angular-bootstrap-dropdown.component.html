@@ -1,0 +1,39 @@
+
+<div class="dropdown form-control p-0 d-flex align-items-center gap-2 search-dropdown" data-bs-toggle="dropdown" [class.focus]="focused" style="height: 2.35rem;" (click)="clicked()">
+  <div class="d-flex h-75 gap-1 ps-2">
+    <ng-content select="selected"></ng-content>
+    @for (item of this.selectedItems; track $index) {
+      <button type="button" class="btn btn-light btn-sm pt-0 pb-0 d-flex ps-0 gap-1 align-items-center" (click)="selectedItemClicked(item)"><i class="bi bi-x ps-1"></i> <span>{{ item.title }}</span></button>
+    }
+  </div>
+
+  <input type="text"
+         #inputElement
+         class="dropdown-toggle p-0 border-0" style="background:none; width: inherit; height: inherit" role="button"
+         [placeholder]="getPlaceholder()"
+         [name]="name"
+         [formControl]="searchControl"
+         (focus)="focused = true"
+         (blur)="focused = false"
+         (keyup)="keyUp($event)"
+  />
+
+  <ul class="dropdown-menu" #dropdownMenu>
+    <ng-content select="elements-list">
+      @for (item of items; track $index) {
+        <li><button class="dropdown-item"
+                    [class.active]="$index === cursorPosition"
+                    (click)="itemSelected(item)" href="#">{{ item.title }}</button></li>
+      }
+
+      @if(items.length === 0) {
+        <li><ng-content select="no-results"><button class="dropdown-item">No results found.</button></ng-content></li>
+      }
+    </ng-content>
+
+  </ul>
+
+  <div class="me-2">
+    <i class="bi bi-chevron-down"></i>
+  </div>
+</div>

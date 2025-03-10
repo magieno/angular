@@ -6,6 +6,9 @@
     "paths": {
       "@magieno/angular-drag-and-drop": [
         "./dist/magieno/angular-drag-and-drop"
+      ],
+      "angular-dropdown": [
+        "./dist/angular-dropdown"
       ]
     },
     "outDir": "./dist/out-tsc",

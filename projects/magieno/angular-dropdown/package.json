@@ -1,0 +1,13 @@
+{
+  "name": "@magieno/angular-bootstrap-dropdown",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^19.1.0",
+    "@angular/core": "^19.1.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
