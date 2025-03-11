@@ -28,7 +28,7 @@ export type Item = ItemInterface | any;
 export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit {
 
   @Input()
-  formControl = new FormControl<null | any | any[]>(null)
+  control = new FormControl<null | any | any[]>(null)
 
   @Input()
   itemsProvider?: DropdownItemsProviderInterface;
