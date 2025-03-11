@@ -50,7 +50,7 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
     if(!item) {
       return item;
     }
-    
+
     if(this.labelKey === null) {
       return this.getValue(item);
     }
@@ -104,6 +104,13 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
 
       // Filter the current items and return the filtered options
       return this.items.filter((item) => {
+
+        // If we don't allow multiple selection, we should still show the item if it's already selected.
+        if(!this.multiple) {
+          return (item.value.toLowerCase().includes(search.toLowerCase()) || item.title.toLowerCase().includes(search.toLowerCase()))
+        }
+
+        // If multiple is allowed, then we should only show the item if it's not already selected.
         return this.selectedItems.includes(item) === false && (item.value.toLowerCase().includes(search.toLowerCase()) || item.title.toLowerCase().includes(search.toLowerCase()));
       });
     }
