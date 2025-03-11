@@ -246,6 +246,16 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
       this.updateDropdown(true)
     }));
 
+    this.subscriptions.push(this.control.valueChanges.subscribe(async (value) => {
+      if(this.multiple) {
+        this.selectedItems = this.items.filter((item) => value.includes(this.getValue(item)));
+      } else {
+        this.selectedItems = this.items.filter((item) => this.getValue(item) === value);
+      }
+
+      this.updateDisplayedItems();
+    }))
+
     this.updateDisplayedItems();
   }
 
