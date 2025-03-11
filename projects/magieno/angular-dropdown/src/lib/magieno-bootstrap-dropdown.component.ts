@@ -47,6 +47,10 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
   labelKey: string | null = "title";
 
   getLabel(item: Item) : string {
+    if(!item) {
+      return item;
+    }
+    
     if(this.labelKey === null) {
       return this.getValue(item);
     }
@@ -69,6 +73,10 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
   valueKey: string | null = "value";
 
   getValue(item: Item): string {
+    if(!item) {
+      return item;
+    }
+
     if(this.valueKey === null) {
       return item;
     }
