@@ -91,7 +91,7 @@ jobs:
         working-directory: ./
 
       - name: Get the current version
-        run: npm version --no-git-tag-version $(npm view @magieno/angular-dropdown@latest version)
+        run: npm version --no-git-tag-version $(npm view @magieno/angular-bootstrap-dropdown@latest version)
         working-directory: ./dist/magieno/angular-dropdown
         env:
           NODE_AUTH_TOKEN: ${{ secrets.MAGIENO_NPM_TOKEN }}
