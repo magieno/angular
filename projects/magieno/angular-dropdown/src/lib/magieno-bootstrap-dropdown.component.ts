@@ -27,6 +27,9 @@ export type Item = ItemInterface | any;
 })
 export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit {
 
+  /**
+   * Named control to avoid confusion with default formControl property binding.
+   */
   @Input()
   control = new FormControl<null | any | any[]>(null)
 
