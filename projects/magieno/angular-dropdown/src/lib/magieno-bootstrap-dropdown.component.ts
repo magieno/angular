@@ -26,6 +26,9 @@ import {DropdownItemsProviderInterface} from './dropdown-items-provider.interfac
 export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit {
 
   @Input()
+  formControl = new FormControl<null | ItemInterface | ItemInterface[]>(null)
+
+  @Input()
   itemsProvider?: DropdownItemsProviderInterface;
 
   // <editor-fold desc="Items">
@@ -60,8 +63,10 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
   itemSelected(item: ItemInterface) {
     if(this.multiple === false) {
       this.selectedItems[0] = item;
+      this.formControl.setValue(item);
     } else {
       this.selectedItems.push(item);
+      this.formControl.setValue(this.selectedItems);
     }
 
     this.itemSelect.emit(item);
