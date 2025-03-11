@@ -20,10 +20,10 @@ import {DropdownItemsProviderInterface} from './dropdown-items-provider.interfac
   imports: [
     ReactiveFormsModule,
   ],
-  templateUrl: './angular-bootstrap-dropdown.component.html',
-  styleUrl: './angular-bootstrap-dropdown.component.scss'
+  templateUrl: './magieno-bootstrap-dropdown.component.html',
+  styleUrl: './magieno-bootstrap-dropdown.component.scss'
 })
-export class AngularBootstrapDropdownComponent implements OnInit, AfterViewInit {
+export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit {
 
   @Input()
   itemsProvider?: DropdownItemsProviderInterface;

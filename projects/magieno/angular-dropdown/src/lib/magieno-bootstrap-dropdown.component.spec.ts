@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AngularBootstrapDropdownComponent } from './angular-bootstrap-dropdown.component';
+import { MagienoBootstrapDropdownComponent } from './magieno-bootstrap-dropdown.component';
 
 describe('AngularDropdownComponent', () => {
-  let component: AngularBootstrapDropdownComponent;
-  let fixture: ComponentFixture<AngularBootstrapDropdownComponent>;
+  let component: MagienoBootstrapDropdownComponent;
+  let fixture: ComponentFixture<MagienoBootstrapDropdownComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AngularBootstrapDropdownComponent]
+      imports: [MagienoBootstrapDropdownComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AngularBootstrapDropdownComponent);
+    fixture = TestBed.createComponent(MagienoBootstrapDropdownComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

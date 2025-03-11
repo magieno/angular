@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import {
-    AngularBootstrapDropdownComponent
-} from "../../../../../magieno/angular-dropdown/src/lib/angular-bootstrap-dropdown.component";
+    MagienoBootstrapDropdownComponent
+} from "../../../../../magieno/angular-dropdown/src/lib/magieno-bootstrap-dropdown.component";
 import {ItemInterface} from '../../../../../magieno/angular-dropdown/src/lib/interfaces/item.interface';
 
 @Component({
   selector: 'app-angular-dropdown',
     imports: [
-        AngularBootstrapDropdownComponent
+        MagienoBootstrapDropdownComponent
     ],
   templateUrl: './angular-dropdown.component.html',
   styleUrl: './angular-dropdown.component.scss'
