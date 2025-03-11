@@ -1,0 +1,31 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h3>Default Dropdown</h3>
+
+      <div class="row">
+        <div class="col-3">
+          <magieno-bootstrap-dropdown
+            [multiple]="false"
+            [items]="items"
+            (itemSelect)="itemSelected($event)"
+          ></magieno-bootstrap-dropdown>
+        </div>
+      </div>
+
+      <h3>Multiple Dropdown</h3>
+
+      <div class="row">
+        <div class="col-3">
+          <magieno-bootstrap-dropdown
+            [items]="items"
+            [multiple]="true"
+            (itemSelect)="itemSelected($event)"
+          ></magieno-bootstrap-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

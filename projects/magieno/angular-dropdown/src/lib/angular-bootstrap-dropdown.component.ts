@@ -13,6 +13,7 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {isPlatformServer} from '@angular/common';
 import {ItemInterface} from './interfaces/item.interface';
+import {DropdownItemsProviderInterface} from './dropdown-items-provider.interface';
 
 @Component({
   selector: 'magieno-bootstrap-dropdown',
@@ -24,9 +25,31 @@ import {ItemInterface} from './interfaces/item.interface';
 })
 export class AngularBootstrapDropdownComponent implements OnInit, AfterViewInit {
 
+  @Input()
+  itemsProvider?: DropdownItemsProviderInterface;
+
   // <editor-fold desc="Items">
   @Input()
   items: ItemInterface[] = [];
+
+  displayedItems: ItemInterface[] = [];
+
+  async getItems(): Promise<ItemInterface[]> {
+    if(!this.itemsProvider) {
+      const search = this.searchControl.value;
+
+      if(search === null) {
+        return this.items;
+      }
+
+      // Filter the current items and return the filtered options
+      return this.items.filter((item) => {
+        return this.selectedItems.includes(item) === false && (item.value.toLowerCase().includes(search.toLowerCase()) || item.title.toLowerCase().includes(search.toLowerCase()));
+      });
+    }
+
+    return this.itemsProvider.getItems(this.searchControl.value ?? "");
+  }
 
   @Output()
   itemSelect = new EventEmitter<ItemInterface>();
@@ -35,7 +58,15 @@ export class AngularBootstrapDropdownComponent implements OnInit, AfterViewInit 
   itemDeselect = new EventEmitter<ItemInterface>();
 
   itemSelected(item: ItemInterface) {
+    if(this.multiple === false) {
+      this.selectedItems[0] = item;
+    } else {
+      this.selectedItems.push(item);
+    }
+
     this.itemSelect.emit(item);
+    this.updateDisplayedItems();
+    this.searchControl.setValue('');
   }
   // </editor-fold>
 
@@ -63,12 +94,25 @@ export class AngularBootstrapDropdownComponent implements OnInit, AfterViewInit 
   // </editor-fold>
 
   // <editor-fold desc="Selected Items">
+  get selectedItem() {
+    if(this.selectedItems.length === 0) {
+      return null;
+    }
+
+    return this.selectedItems[0];
+  }
+
   @Input()
   selectedItems: ItemInterface[] = [];
 
   selectedItemClicked(item: ItemInterface) {
     // When an item already selected is clicked on, it means we want to deselect it.
     this.itemDeselect.emit(item);
+
+    // Remove element from selected array
+    this.selectedItems = this.selectedItems.filter((selectedItem) => selectedItem !== item);
+
+    this.updateDisplayedItems();
   }
   // </editor-fold>
 
@@ -124,16 +168,16 @@ export class AngularBootstrapDropdownComponent implements OnInit, AfterViewInit 
   ) {
   }
 
-  ngOnInit() {
-    this.subscriptions.push(this.searchControl.valueChanges.subscribe((value) => {
+  async ngOnInit() {
+    this.subscriptions.push(this.searchControl.valueChanges.subscribe(async (value) => {
       this.cursorPosition = -1;
 
-      //this.filterOptions();
+      this.updateDisplayedItems();
 
       this.updateDropdown(true)
     }));
 
-    //this.filterOptions();
+    this.updateDisplayedItems();
   }
 
   ngAfterViewInit() {
@@ -171,5 +215,11 @@ export class AngularBootstrapDropdownComponent implements OnInit, AfterViewInit 
     }
 
     return this.placeholder;
+  }
+
+  updateDisplayedItems() {
+    this.getItems().then(items => {
+      this.displayedItems = items;
+    })
   }
 }
