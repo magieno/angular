@@ -112,10 +112,10 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
   itemSelected(item: Item) {
     if(this.multiple === false) {
       this.selectedItems[0] = item;
-      this.formControl.setValue(this.getValue(item));
+      this.control.setValue(this.getValue(item));
     } else {
       this.selectedItems.push(item);
-      this.formControl.setValue(this.selectedItems.map(item => this.getValue(item)));
+      this.control.setValue(this.selectedItems.map(item => this.getValue(item)));
     }
 
     this.itemSelect.emit(item);
