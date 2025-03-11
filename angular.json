@@ -45,12 +45,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/magieno/angular-dropdown/ng-package.json",
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "node_modules/"
-              ]
-            }
+            "project": "projects/magieno/angular-dropdown/ng-package.json"
           },
           "configurations": {
             "production": {
