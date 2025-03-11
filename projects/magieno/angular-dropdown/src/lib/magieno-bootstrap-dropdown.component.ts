@@ -15,6 +15,8 @@ import {isPlatformServer} from '@angular/common';
 import {ItemInterface} from './interfaces/item.interface';
 import {DropdownItemsProviderInterface} from './dropdown-items-provider.interface';
 
+export type Item = ItemInterface | any;
+
 @Component({
   selector: 'magieno-bootstrap-dropdown',
   imports: [
@@ -26,18 +28,62 @@ import {DropdownItemsProviderInterface} from './dropdown-items-provider.interfac
 export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit {
 
   @Input()
-  formControl = new FormControl<null | ItemInterface | ItemInterface[]>(null)
+  formControl = new FormControl<null | any | any[]>(null)
 
   @Input()
   itemsProvider?: DropdownItemsProviderInterface;
 
+  /**
+   * The key of the item that should be used as the label.
+   *
+   * By default, it assumes it's an ItemInterface and will use the "title" key.
+   *
+   * If you pass nothing, the value will be returned as the label.
+   */
+  @Input()
+  labelKey: string | null = "title";
+
+  getLabel(item: Item) : string {
+    if(this.labelKey === null) {
+      return this.getValue(item);
+    }
+
+    if(item.hasOwnProperty(this.labelKey) === false) {
+      throw new Error(`The item does not have the key '${this.labelKey}', we cannot use it as the label.`);
+    }
+
+    return item[this.labelKey];
+  }
+
+  /**
+   * The key of the item that should be used as the value.
+   *
+   * By default, it assumes it's an ItemInterface and will use the "value" key and will assign it as the value in the formControl.
+   *
+   * If you specify null, it will direclty assign the whole object as the value in the formControl.
+   */
+  @Input()
+  valueKey: string | null = "value";
+
+  getValue(item: Item): string {
+    if(this.valueKey === null) {
+      return item;
+    }
+
+    if(item.hasOwnProperty(this.valueKey) === false) {
+      throw new Error(`The item does not have the key '${this.valueKey}', we cannot use it as the value.`);
+    }
+
+    return item[this.valueKey];
+  }
+
   // <editor-fold desc="Items">
   @Input()
-  items: ItemInterface[] = [];
+  items: Item[] = [];
 
-  displayedItems: ItemInterface[] = [];
+  displayedItems: Item[] = [];
 
-  async getItems(): Promise<ItemInterface[]> {
+  async getItems(): Promise<Item[]> {
     if(!this.itemsProvider) {
       const search = this.searchControl.value;
 
@@ -55,18 +101,18 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
   }
 
   @Output()
-  itemSelect = new EventEmitter<ItemInterface>();
+  itemSelect = new EventEmitter<Item>();
 
   @Output()
-  itemDeselect = new EventEmitter<ItemInterface>();
+  itemDeselect = new EventEmitter<Item>();
 
-  itemSelected(item: ItemInterface) {
+  itemSelected(item: Item) {
     if(this.multiple === false) {
       this.selectedItems[0] = item;
-      this.formControl.setValue(item);
+      this.formControl.setValue(this.getValue(item));
     } else {
       this.selectedItems.push(item);
-      this.formControl.setValue(this.selectedItems);
+      this.formControl.setValue(this.selectedItems.map(item => this.getValue(item)));
     }
 
     this.itemSelect.emit(item);
@@ -108,9 +154,9 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
   }
 
   @Input()
-  selectedItems: ItemInterface[] = [];
+  selectedItems: Item[] = [];
 
-  selectedItemClicked(item: ItemInterface) {
+  selectedItemClicked(item: Item) {
     // When an item already selected is clicked on, it means we want to deselect it.
     this.itemDeselect.emit(item);
 

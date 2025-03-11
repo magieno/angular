@@ -3,11 +3,11 @@
     @if(multiple) {
       <div class="d-flex h-75 gap-1 ps-2">
         @for (item of this.selectedItems; track $index) {
-          <button type="button" class="btn btn-light btn-sm pt-0 pb-0 d-flex ps-0 gap-1 align-items-center" (click)="selectedItemClicked(item)"><i class="bi bi-x ps-1"></i> <span>{{ item.title }}</span></button>
+          <button type="button" class="btn btn-light btn-sm pt-0 pb-0 d-flex ps-0 gap-1 align-items-center" (click)="selectedItemClicked(item)"><i class="bi bi-x ps-1"></i> <span>{{ this.getLabel(item) }}</span></button>
         }
       </div>
     } @else {
-      <div class="h-75 ps-2" [class.ps-2]="this.selectedItem === null" [class.ps-3]="this.selectedItem !== null">{{ this.selectedItem?.title }}</div>
+      <div class="h-75 ps-2" [class.ps-2]="this.selectedItem === null" [class.ps-3]="this.selectedItem !== null">{{ this.getLabel(this.selectedItem) }}</div>
     }
 
   <input type="text"
@@ -25,7 +25,7 @@
       @for (item of displayedItems; track $index) {
         <li><button class="dropdown-item"
                     [class.active]="$index === cursorPosition"
-                    (click)="itemSelected(item)" href="#">{{ item.title }}</button></li>
+                    (click)="itemSelected(item)" href="#">{{ this.getLabel(item) }}</button></li>
       }
 
       @if(displayedItems.length === 0) {
