@@ -247,15 +247,12 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
     }));
 
     this.subscriptions.push(this.control.valueChanges.subscribe(async (value) => {
-      if(this.multiple) {
-        this.selectedItems = this.items.filter((item) => value.includes(this.getValue(item)));
-      } else {
-        this.selectedItems = this.items.filter((item) => this.getValue(item) === value);
-      }
+      this.syncFormControlWithSelectedItems();
 
       this.updateDisplayedItems();
     }))
 
+    this.syncFormControlWithSelectedItems()
     this.updateDisplayedItems();
   }
 
@@ -275,6 +272,14 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
       this.moveCursorDown();
     } else if(event.key === "Enter") {
       this.itemSelected(this.items[this.cursorPosition]);
+    }
+  }
+
+  syncFormControlWithSelectedItems() {
+    if(this.multiple) {
+      this.selectedItems = this.items.filter((item) => this.control.value.includes(this.getValue(item)));
+    } else {
+      this.selectedItems = this.items.filter((item) => this.getValue(item) === this.control.value);
     }
   }
 
