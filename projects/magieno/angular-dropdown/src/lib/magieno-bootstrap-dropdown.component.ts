@@ -147,7 +147,6 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
 
   dropdown: any;
 
-  @Input()
   dropdownOpen = false;
 
   @Output()
@@ -171,7 +170,6 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
     return this.selectedItems[0];
   }
 
-  @Input()
   selectedItems: Item[] = [];
 
   selectedItemClicked(item: Item) {
@@ -201,6 +199,9 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
 
   @Input()
   name: string = ""
+
+  @Input()
+  showChevronDown: boolean = true;
 
   // <editor-fold desc="Cursor Positions">
   private _cursorPosition = -1;
@@ -270,13 +271,22 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
       this.moveCursorUp();
     } else if(event.key === "ArrowDown") {
       this.moveCursorDown();
-    } else if(event.key === "Enter") {
+    }
+    else if(event.key === "Backspace") {
+      if(this.searchControl.value === "" && this.selectedItems.length > 0) {
+        this.selectedItemClicked(this.selectedItems[this.selectedItems.length - 1]);
+      }
+    }
+    else if(event.key === "Enter") {
       this.itemSelected(this.items[this.cursorPosition]);
     }
   }
 
   syncFormControlWithSelectedItems() {
     if(this.multiple) {
+      if(!Array.isArray(this.control.value)) {
+        return;
+      }
       this.selectedItems = this.items.filter((item) => this.control.value.includes(this.getValue(item)));
     } else {
       this.selectedItems = this.items.filter((item) => this.getValue(item) === this.control.value);

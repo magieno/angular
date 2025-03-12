@@ -1,14 +1,18 @@
-
-<div class="dropdown form-control p-0 d-flex align-items-center gap-2 search-dropdown  text-nowrap" data-bs-toggle="dropdown" [class.focus]="focused" style="height: 2.35rem;" (click)="clicked()">
-    @if(multiple) {
-      <div class="d-flex h-75 gap-1 ps-2">
-        @for (item of this.selectedItems; track $index) {
-          <button type="button" class="btn btn-light btn-sm pt-0 pb-0 d-flex ps-0 gap-1 align-items-center" (click)="selectedItemClicked(item)"><i class="bi bi-x ps-1"></i> <span>{{ this.getLabel(item) }}</span></button>
-        }
-      </div>
-    } @else {
-      <div class="h-75 ps-2" [class.ps-2]="this.selectedItem === null" [class.ps-3]="this.selectedItem !== null">{{ this.getLabel(this.selectedItem) }}</div>
-    }
+<div class="dropdown form-control p-0 d-flex align-items-center gap-2 search-dropdown  text-nowrap"
+     data-bs-toggle="dropdown" [class.focus]="focused" style="height: 2.35rem;" (click)="clicked()">
+  @if (multiple) {
+    <div class="d-flex h-75 gap-1 ps-2">
+      @for (item of this.selectedItems; track $index) {
+        <button type="button" class="btn btn-light btn-sm pt-0 pb-0 d-flex ps-0 gap-1 align-items-center"
+                (click)="selectedItemClicked(item)"><i class="bi bi-x ps-1"></i> <span>{{ this.getLabel(item) }}</span>
+        </button>
+      }
+    </div>
+  } @else {
+    <div class="h-75 ps-2" [class.ps-2]="this.selectedItem === null"
+         [class.ps-3]="this.selectedItem !== null">{{ this.getLabel(this.selectedItem) }}
+    </div>
+  }
 
   <input type="text"
          #inputElement
@@ -22,18 +26,27 @@
   />
 
   <ul class="dropdown-menu" #dropdownMenu>
-      @for (item of displayedItems; track $index) {
-        <li><button class="dropdown-item"
-                    [class.active]="$index === cursorPosition"
-                    (click)="itemSelected(item)" href="#">{{ this.getLabel(item) }}</button></li>
-      }
+    @for (item of displayedItems; track $index) {
+      <li>
+        <button class="dropdown-item"
+                [class.active]="$index === cursorPosition"
+                (click)="itemSelected(item)" href="#">{{ this.getLabel(item) }}
+        </button>
+      </li>
+    }
 
-      @if(displayedItems.length === 0) {
-        <li><ng-content select="no-results"><button class="dropdown-item">No results found.</button></ng-content></li>
-      }
+    @if (displayedItems.length === 0) {
+      <li>
+        <ng-content select="no-results">
+          <button class="dropdown-item">No results found.</button>
+        </ng-content>
+      </li>
+    }
   </ul>
 
-  <div class="me-2">
-    <i class="bi bi-chevron-down"></i>
-  </div>
+  @if (showChevronDown) {
+    <div class="me-2">
+      <i class="bi bi-chevron-down"></i>
+    </div>
+  }
 </div>
