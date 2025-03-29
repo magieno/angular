@@ -27,4 +27,8 @@ export class AngularDropdownComponent {
   itemSelected(item: ItemInterface) {
     console.log(item);
   }
+
+  onSearch(search: string) {
+    console.log(search);
+  }
 }

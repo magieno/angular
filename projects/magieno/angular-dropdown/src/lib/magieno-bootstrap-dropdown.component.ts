@@ -243,7 +243,9 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
 
   async ngOnInit() {
     this.subscriptions.push(this.searchControl.valueChanges.subscribe(async (value) => {
-      value && this.search.emit(value);
+      if(value !== null) {
+        this.search.emit(value);
+      }
 
       this.cursorPosition = -1;
 
