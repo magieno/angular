@@ -146,6 +146,9 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
   @ViewChild("dropdownMenu")
   dropdownMenuElement!: ElementRef;
 
+  @Input()
+  filteringEnabled: boolean = true;
+
   subscriptions: Subscription[] = [];
 
   dropdown: any;
@@ -290,6 +293,10 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
   }
 
   syncFormControlWithSelectedItems() {
+    if(!this.filteringEnabled) {
+      return;
+    }
+
     if(this.multiple) {
       if(!Array.isArray(this.control.value)) {
         return;
