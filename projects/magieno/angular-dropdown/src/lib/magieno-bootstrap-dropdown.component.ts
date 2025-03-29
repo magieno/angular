@@ -101,7 +101,7 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
     if(!this.itemsProvider) {
       const search = this.searchControl.value;
 
-      if(search === null) {
+      if(search === null || !this.filteringEnabled) {
         return this.items;
       }
 
@@ -111,11 +111,6 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
         // If we don't allow multiple selection, we should still show the item if it's already selected.
         if(!this.multiple) {
           return (item.value.toLowerCase().includes(search.toLowerCase()) || item.title.toLowerCase().includes(search.toLowerCase()))
-        }
-
-        // If filtering is not enabled, we should show all items.
-        if(!this.filteringEnabled) {
-          return item;
         }
 
         // If multiple is allowed, then we should only show the item if it's not already selected.
