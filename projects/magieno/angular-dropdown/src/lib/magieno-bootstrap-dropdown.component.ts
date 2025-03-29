@@ -89,7 +89,7 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
   }
 
   @Output()
-  onSearch: EventEmitter<string> = new EventEmitter();
+  search: EventEmitter<string> = new EventEmitter();
 
   // <editor-fold desc="Items">
   @Input()
@@ -243,7 +243,7 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
 
   async ngOnInit() {
     this.subscriptions.push(this.searchControl.valueChanges.subscribe(async (value) => {
-      value && this.onSearch.emit(value);
+      value && this.search.emit(value);
 
       this.cursorPosition = -1;
 
