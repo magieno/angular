@@ -1,7 +1,8 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef, EventEmitter,
+  ElementRef,
+  EventEmitter,
   Inject,
   Input,
   OnInit,
@@ -14,6 +15,7 @@ import {Subscription} from 'rxjs';
 import {isPlatformServer} from '@angular/common';
 import {ItemInterface} from './interfaces/item.interface';
 import {DropdownItemsProviderInterface} from './dropdown-items-provider.interface';
+import {StatusEnum} from './status.enum';
 
 export type Item = ItemInterface | any;
 
@@ -207,6 +209,9 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
   name: string = ""
 
   @Input()
+  status: StatusEnum = StatusEnum.Ready;
+
+  @Input()
   showChevronDown: boolean = true;
 
   // <editor-fold desc="Cursor Positions">
@@ -326,4 +331,6 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
       this.displayedItems = items;
     })
   }
+
+  protected readonly StatusEnum = StatusEnum;
 }
