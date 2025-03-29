@@ -113,6 +113,11 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
           return (item.value.toLowerCase().includes(search.toLowerCase()) || item.title.toLowerCase().includes(search.toLowerCase()))
         }
 
+        // If filtering is not enabled, we should show all items.
+        if(!this.filteringEnabled) {
+          return item;
+        }
+
         // If multiple is allowed, then we should only show the item if it's not already selected.
         return this.selectedItems.includes(item) === false && (item.value.toLowerCase().includes(search.toLowerCase()) || item.title.toLowerCase().includes(search.toLowerCase()));
       });
@@ -293,10 +298,6 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
   }
 
   syncFormControlWithSelectedItems() {
-    if(!this.filteringEnabled) {
-      return;
-    }
-
     if(this.multiple) {
       if(!Array.isArray(this.control.value)) {
         return;
