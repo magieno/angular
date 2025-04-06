@@ -1,7 +1,8 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef, EventEmitter,
+  ElementRef,
+  EventEmitter,
   Inject,
   Input,
   OnInit,
@@ -14,6 +15,7 @@ import {Subscription} from 'rxjs';
 import {isPlatformServer} from '@angular/common';
 import {ItemInterface} from './interfaces/item.interface';
 import {DropdownItemsProviderInterface} from './dropdown-items-provider.interface';
+import {StatusEnum} from './status.enum';
 
 export type Item = ItemInterface | any;
 
@@ -101,7 +103,7 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
     if(!this.itemsProvider) {
       const search = this.searchControl.value;
 
-      if(search === null) {
+      if(search === null || !this.filteringEnabled) {
         return this.items;
       }
 
@@ -145,6 +147,9 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
   // <editor-fold desc="Dropdown">
   @ViewChild("dropdownMenu")
   dropdownMenuElement!: ElementRef;
+
+  @Input()
+  filteringEnabled: boolean = true;
 
   subscriptions: Subscription[] = [];
 
@@ -202,6 +207,9 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
 
   @Input()
   name: string = ""
+
+  @Input()
+  status: StatusEnum = StatusEnum.Ready;
 
   @Input()
   showChevronDown: boolean = true;
@@ -323,4 +331,6 @@ export class MagienoBootstrapDropdownComponent implements OnInit, AfterViewInit 
       this.displayedItems = items;
     })
   }
+
+  protected readonly StatusEnum = StatusEnum;
 }
